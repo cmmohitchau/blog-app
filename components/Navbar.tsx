@@ -22,7 +22,7 @@ export const Navbar = () => {
                             <MobileMenu />
                         </div>
                     <a 
-                        href="/" 
+                        href="/blog" 
                         className="text-2xl font-bold bg-linear-to-r from-yellow-200 via-pink-200 to-pink-300 bg-clip-text text-transparent hover:scale-105 transition-transform"
                     >
                         Blogify
