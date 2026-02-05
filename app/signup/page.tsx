@@ -66,14 +66,14 @@ export default function Signup() {
 
           {error && (
             <div className="mb-4 p-4 bg-red-50 dark:bg-red-950/30 border-2 border-red-200 dark:border-red-800 rounded-xl flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
             </div>
           )}
 
           {success && (
             <div className="mb-4 p-4 bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 rounded-xl flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
               <p className="text-sm text-green-600 dark:text-green-400">
                 Account created successfully! Redirecting...
               </p>
