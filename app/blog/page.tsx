@@ -102,3 +102,5 @@ export default async function Blog() {
         </div>
     )
 }
+
+export const dynamic = 'force-dynamic'
