@@ -49,8 +49,8 @@ export default function Signup() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/">
-            <h1 className="text-4xl font-bold bg-linear-to-r from-pink-500 via-purple-500 to-indigo-600 bg-clip-text text-transparent mb-2">
-              WriteSphere
+            <h1 className="text-4xl font-bold bg-linear-to-r from-pink-500 via-purple-500 to-indigo-600 bg-clip-text text-transparent mb-4">
+              Blogify
             </h1>
           </Link>
           <p className="text-muted-foreground">Start your creative journey today</p>
