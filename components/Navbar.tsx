@@ -1,15 +1,31 @@
 'use client'
 
-import { useSession } from "@/lib/auth-client"
+import { authClient, useSession } from "@/lib/auth-client"
 import { LogoutButton } from "./logout-btn"
 import { SearchBar } from "./search-bar"
 import { useState, useEffect } from 'react'
 import { MobileMenu } from "./mobile-menu"
+import { Button } from "./ui/button"
+import { useRouter } from "next/navigation"
 
 export const Navbar = () => {
     const { data } = useSession();
+    const [isLoggedIn , setIsLoggedIn] = useState(false);
+    const router = useRouter();
 
-   
+    const logout = async (e : any) => {
+        
+        await authClient.signOut();
+        router.refresh();
+        router.push("/");
+        setIsLoggedIn(false);
+    }
+    useEffect( () => {
+        if(data) {
+            setIsLoggedIn(true);
+        }
+    } , [data])
+
 
     return(
         <nav className={` 
@@ -65,15 +81,16 @@ export const Navbar = () => {
 
                     {/* Auth  */}
                     <div className="flex items-center gap-4">
-                        {data ? (
+                        {isLoggedIn ? (
                             <div className="flex items-center gap-4">
                                 <div className="sm:flex items-center gap-3">
                                     <div className="w-8 h-8 rounded-full bg-linear-to-br from-yellow-200 to-pink-300 flex items-center justify-center text-purple-900 font-bold text-sm">
-                                        {data.user?.name?.[0]?.toUpperCase() || 'U'}
+                                        {data?.user?.name?.[0]?.toUpperCase() || 'U'}
                                     </div>
 
                                 </div>
-                                <LogoutButton />
+                            <Button onClick={logout} className="bg-red-500 hover:bg-red-600">Logout</Button>
+
 
                             </div>
                         ) : (
