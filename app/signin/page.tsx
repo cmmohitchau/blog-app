@@ -15,6 +15,12 @@ export default function Signin() {
 
       const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!email || !password) {
+            setError("Email and password are required");
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setSuccess(false);
@@ -33,11 +39,27 @@ export default function Signin() {
           setSuccess(true);
           setTimeout(() => {
             window.location.href = '/blog';
-          }, 1500);
+          }, 1000);
         },
         onError: (ctx) => {
           setLoading(false);
-          setError(ctx.error.message);
+
+            switch (ctx.error.code) {
+                case "USER_NOT_FOUND":
+                    setError("No account found with this email");
+                    break;
+
+                case "INVALID_PASSWORD":
+                    setError("Incorrect password");
+                    break;
+
+                case "EMAIL_PASSWORD_DISABLED":
+                    setError("Email/password login is disabled");
+                    break;
+
+                default:
+                    setError(ctx.error.message || "Something went wrong");
+            }
         },
       }
     );
@@ -49,7 +71,7 @@ export default function Signin() {
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <Link href="/">
-                        <h1 className="text-4xl font-bold bg-linear-to-r from-pink-500 via-purple-500 to-indigo-600 bg-clip-text text-transparent mb-2">
+                        <h1 className="text-4xl font-bold bg-linear-to-r from-pink-500 via-purple-500 to-indigo-600 bg-clip-text text-transparent mb-4">
                             Blogify
                         </h1>
                     </Link>
@@ -96,7 +118,11 @@ export default function Signin() {
                         </div>
                     </div>
 
-                    
+                    {error && (
+                        <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-600">
+                            {error}
+                        </div>
+                    )}
                     <Button onClick={handleSubmit} className="w-full h-12 bg-linear-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all mb-6">
                         {loading ? (
                             <span className="flex items-center justify-center gap-2">
@@ -113,6 +139,7 @@ export default function Signin() {
                             'Sign In'
                         )}
                     </Button>
+                    
 
                     {/* Divider */}
                     <div className="flex items-center my-6">
