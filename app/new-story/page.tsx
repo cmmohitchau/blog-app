@@ -1,20 +1,33 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pen, Save, FileText, Sparkles } from 'lucide-react';
 import { useSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import slugify from 'slugify';
 import { nanoid } from "nanoid";
+import { DialogDemo } from '@/components/SignInModal';
 
 export default function WriteStory() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [wordCount, setWordCount] = useState(0);
     const [isSaving, setIsSaving] = useState(false);
-
+    const [open , setOpen] = useState(false);
+    
     const router = useRouter();
-    const { data } = useSession();
+    const  {data , error} = useSession();
+
+    useEffect( () => {
+        if(!data) {
+            setOpen(true);
+        }
+    } , [data]);
+
+    if(!data) {
+        return <DialogDemo open={open} onOpenChange={setOpen} />;
+    }
+
 
     const handleContentChange = (e: any) => {
         const text = e.target.value;
